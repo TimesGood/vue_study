@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>何为数据代理</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <script text="text/javascript">
+        let obj = {y:100}//被代理对象
+        let proxy = {x:100}//代理人
+
+        //代理逻辑
+        Object.defineProperty(obj,"x",{
+            //当要获取值时，取代理人的值
+            get(){
+                return proxy.x
+            },
+            //当要修改值时，修改代理人的值
+            set(value){
+                proxy.x = value
+            }
+        })
+        console.log(obj)
+    </script>
+</body>
+</html>

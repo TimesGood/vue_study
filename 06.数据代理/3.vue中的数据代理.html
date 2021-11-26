@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue中的数据代理</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>学校名称：{{school_name}}</h1>
+        <h1>学校地址：{{school_address}}</h1>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            el:"#root",
+            data: {
+                school_name:"社会",
+                school_address:"地球"
+            },
+        })
+    </script>
+</body>
+</html>

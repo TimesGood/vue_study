@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>el与data的两种写法</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        MVVM模型：
+            1.M：模型（Model），data中的数据
+            2.V：视图（View），视图代码
+            3.VM：视图模型（ViewModel），vue实现
+        观察发现：
+            1.data中所有的属性，最后都出现在vm身上
+            2.vm身上所有的属性及vue原型上所有属性，在vue模板中都可以直接使用（也就是花括号）
+    -->
+    <!--这一块代表View-->
+    <div id="root">
+        <h1>学校名称：{{name}}</h1>
+        <h1>学校地址：{{address}}</h1>
+        <h1>vue身上的属性：{{_c}}</h1>
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        //这一块代表ViewModel
+        const vm = new Vue({
+            el: "#root",
+            //这一块代表Model
+            data: {
+                name:"社会",
+                address:"地球"
+            }
+        })
+        //控制台打印vm实例对象
+        console.log(vm)
+    </script>
+</body>
+</html>
