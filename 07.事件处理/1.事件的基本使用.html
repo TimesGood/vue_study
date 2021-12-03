@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>事件的基本使用</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        .list{
+            width:200px;
+            height:200px;
+            background-color: skyblue;
+            overflow: auto;/*滚动条*/
+        }
+        li{
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <h2>欢迎来到{{name}}</h2>
+        <button v-on:click="show">点我提示</button>
+        <button @click="show">点击事件简写</button>
+        <button @click="show_para($event,66)">传参导致event解决</button>
+        <!--当一个元素有事件，元素外层元素也有事件，满足触发条件两事件都会触发，我们可以停止外面一层的触发,。stop即可-->
+        <div class="demo" @click="show">
+             <button @click.stop="show">阻止连续冒泡</button>
+        </div>
+        <button @click.once="show">只弹窗一次</button>
+        <ul class="list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+       
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+        new Vue({
+            el:"#root",
+            data:{
+                name:"我的世界"
+            },
+            methods:{
+                show(event){
+                    console.log(event.target.innerText)
+                    alert("欢迎来到我的世界")
+                },
+                show_para(event,number){
+                    console.log(event.target.innerText)
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

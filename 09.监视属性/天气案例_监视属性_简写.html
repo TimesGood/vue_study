@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>天气案例</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    
+    <div id="root">
+       <h2>今天天气很{{info}}</h2>
+       <button @click="toggle()">切换天气</button></br>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+    
+        const vm = new Vue({
+            el:"#root",
+            data:{
+                isHot:true
+            },
+            //计算属性
+            computed:{
+                info(){
+                    return this.isHot ? "炎热":"凉爽"
+                }
+            },
+            methods: {
+                toggle(){
+                    this.isHot = !this.isHot
+                }
+            },
+            watch:{
+                //正常写
+                // isHot:{
+                //     immediate:true,
+                //     handler(newValue,oldValue){
+                //         console.log("isHot改变了，由"+oldValue+"改为"+newValue)
+                //     }
+                // },
+                //简写
+                // isHot(newValue,oldValue){
+                //     console.log("isHot改变了，由"+oldValue+"改为"+newValue)
+                // }
+            }
+        })
+        //正常写
+        // vm.$watch("isHot",{
+        //     immediate:true,
+        //     handler(newValue,oldValue){
+        //         console.log("isHot改变了，由"+oldValue+"改为"+newValue)
+        //     }
+        // })
+        //简写
+        vm.$watch("isHot",(newValue,oldValue) => {
+            console.log("isHot改变了，由"+oldValue+"改为"+newValue)
+        })
+        //注：简写的watch就不能更改里面的配置属性了，比如immediate、deep等，所以视情况简写
+
+    </script>
+</body>
+</html>

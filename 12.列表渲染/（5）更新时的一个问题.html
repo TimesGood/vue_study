@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>vue更新问题</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+    
+    </style>
+</head>
+<body>
+    <div id="root">
+        <h3>人员列表</h3>
+        <button @click="updateMei">更新列表</button>
+        <ul>
+            <li v-for="p in persons" :key="p.id">
+                {{p.name}}-{{p.age}}-{{p.sex}}
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        
+        const vm = new Vue({
+            el:"#root",
+            data:{
+                persons:[
+                    {id:"001",name:"马冬梅",age:"24",sex:"女"},
+                    {id:"002",name:"周冬雨",age:"23",sex:"女"},
+                    {id:"003",name:"周杰伦",age:"34",sex:"男"},
+                    {id:"004",name:"温兆伦",age:"27",sex:"男"}
+               ]
+            },
+            methods: {
+                updateMei(){
+                    // 这里改了，页面也改了没问题
+                    // this.persons[0].name = "马老师"
+                    // this.persons[0].age = "44"
+                    // this.persons[0].sex = "男"
+                    //但是这里改了，但是页面没改，vue并没有更新
+                    // this.persons[0] = {id:"001",name:"马老师",age:"44",sex:"男"}
+                    //在vue中对数组的操作只有是调用了数组中修改数据的方法才会监听到更新数据，而直接操作索引是不行的
+                    //更新数组中的数据一下写法才是正确
+                    //0表示要从哪开始拼接，1表示被拼接覆盖的数量
+                    this.persons.splice(0,1,{id:"001",name:"马老师",age:"44",sex:"男"})
+                }
+            },
+        })
+    </script>
+</body>
+</html>

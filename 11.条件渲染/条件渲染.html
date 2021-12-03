@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>条件渲染</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+    
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!-- v-show隐藏内容把内容隐藏，但在页面中还是可以找到这个元素的，vue底层实现其实是调整style中的display=none -->
+        <h2 v-show = "false">欢迎来到{{name}}</h2>
+        <!-- v-if隐藏内容会把整个标签直接干掉，不存在于界面中 -->
+        <h2 v-if = "false">欢迎来到{{name}}</h2>
+
+        <h2>当前n值为：{{n}}</h2>
+        <button @click="n++">点我n++</button>
+        <div v-show="n == 1">标签1</div>
+        <div v-show="n == 2">标签2</div>
+        <div v-show="n == 3">标签3</div>
+
+        <div v-if="n == 1">标签1</div>
+        <div v-if="n == 2">标签2</div>
+        <div v-if="n == 3">标签3</div>
+        <!--
+            v-show与v-if完成的效果是差不多的，但是当我们需要控制的内容属于高频显示与隐藏时，
+            出于性能考虑，还是用v-show好一点，因为就算隐藏的内容，但它的标签体还是存在的，而
+            v-if直接干掉标签，要显示的时候又要创建新标签，还是影响效率的
+        -->
+        <!-- 当然有if当然有else if、else；但是使用这个必须是一组连续的标签组，不能在该组中间加上其他元素 -->
+        <div v-if="n == 1">标签1</div>
+        <div v-else-if="n == 2">标签2</div>
+        <div v-else>标签3</div>
+        <!-- 
+            当我们需要把一组东西隐藏时，隐藏每个元素都得v-show、v-if，这很不好，但也可以用另一个div包住之后，
+            使这个包住的元素使用v-show、v-if也可以实现，但是这样的话就破坏了我们编写页面时的结构，
+            可以使用<template>标签代替div，当页面渲染完成时该标签就不会出现在页面中，这样不会破坏结构，注意的是
+            该标签只能用v-if，不能使用v-show
+        -->
+        <template v-if="n == 1">
+            <div>标签1</div>
+            <div>标签2</div>
+            <div>标签3</div>
+        </template>
+            
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        
+        const vm = new Vue({
+            el:"#root",
+            data:{
+               name:"我的世界",
+               n:0
+            }
+        })
+    </script>
+</body>
+</html>

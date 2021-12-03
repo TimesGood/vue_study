@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>基本列表</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+    
+    </style>
+</head>
+<body>
+    <div id="root">
+        <h3>人员列表</h3>
+        <ul>
+            <!-- :key="p.id"一定要绑定key -->
+            <li v-for="p in persons" :key="p.id">{{p.name}}-{{p.age}}</li>
+            <!-- 也可以这样写，p为遍历出的对象，inex遍历的索引，并不是对象中的id -->
+            <!-- <li v-for="(p,index) in persons" :key="index">{{p.name}}-{{p.age}}</li> -->
+        </ul>
+        <!-- 当然，遍历不止可以遍历数组，还可以遍历对象、字符串、数字 -->
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        
+        const vm = new Vue({
+            el:"#root",
+            data:{
+               persons:[
+                   {id:"001",name:"张三",age:"18"},
+                   {id:"002",name:"李四",age:"19"},
+                   {id:"003",name:"王五",age:"20"}
+               ]
+            }
+        })
+    </script>
+</body>
+</html>

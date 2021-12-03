@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>key的原理</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+    
+    </style>
+</head>
+<body>
+    <div id="root">
+        <h3>人员列表</h3>
+        <button @click="add">添加一个老刘</button>
+        <!-- 
+            在遍历列表时key的作用是为了真实dom与虚拟dom进行对比，如果对比数据一致就会拿来复用，而对比不一致时，就会创建
+            所以在遍历的时候key值最好是数据上的id唯一索引，而不是遍历的序号索引，而当你遍历的时候没有写key，vue就会把遍历的索引值作为key
+         -->
+        <ul>
+            <li v-for="p in persons" :key="p.id">
+                {{p.name}}-{{p.age}}
+                <input type="text">
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        
+        const vm = new Vue({
+            el:"#root",
+            data:{
+               persons:[
+                   {id:"001",name:"张三",age:"18"},
+                   {id:"002",name:"李四",age:"19"},
+                   {id:"003",name:"王五",age:"20"}
+               ]
+            },
+            methods: {
+                add(){
+                    const p = {id:"004",name:"老刘",age:"40"}
+                    // unshift从数组头部添加
+                    this.persons.unshift(p)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

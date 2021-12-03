@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>绑定样式</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        /* 基础 */
+        .basic{
+            width: 200px;
+            height: 100px;
+        }
+        /* 边框 */
+        .border1{
+            border:1px solid #000;
+        }
+        /* 圆角 */
+        .border2{
+            border-radius: 20px;
+        }
+        /* 背景 */
+        .background1{
+            background: skyblue;
+        }
+        .background2{
+            background: greenyellow;
+        }
+        .background3{
+            background: orange;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!--绑定class样式，字符串写法，动态改变样式，适用于：要绑定的样式名字不确定-->
+        <div class="basic" :class="class_str" @click="change1">{{name}}</div><br/><br/>
+        <!--绑定class样式，数组写法，动态改变样式，适用于：要绑定的样式数量不确定，名字也不确定-->
+        <div class="basic" :class="class_arr" @click="change2">{{name}}</div><br/><br/>
+        <!--绑定class样式，对象写法，动态改变样式，适用于：要绑定的样式数量确定，名字也确定，但可以动态决定样式用不用-->
+        <div class="basic" :class="class_obj" @click="change3">{{name}}</div><br/><br/>
+        <!--绑定style类似，直接把样式属性写成对象，不常用-->
+        <div class="basic" :style="style_obj">{{name}}</div>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        
+        const vm = new Vue({
+            el:"#root",
+            data:{
+                name:"世界",
+                class_str:"background1",
+                class_arr:["border1","border2","background1"],
+                class_obj:{
+                    border1:true,
+                    border2:true,
+                    background1:true
+                },
+                style_obj:{
+                    fontSize: "40px",
+                    color:"#FFFFFF",
+                    backgroundColor: "orange"
+                }
+            },
+            
+            methods: {
+                change1(){
+                    const class_arr = ["background1","background2","background3"]
+                    //random()只会取到0.???的值,*3之后最大也就2.7???
+                    //再floor向下取整就可以得到0~2的随机数
+                    const index = Math.floor(Math.random()*3)
+                    this.class_str = class_arr[index]
+                },
+                change2(){
+                    this.class_arr.shift()
+                },
+                change3(){
+                    this.class_obj.border2 = !this.class_obj.border2
+                }
+            },
+        })
+    </script>
+</body>
+</html>

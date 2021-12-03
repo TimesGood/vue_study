@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>属性添加</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+    
+    </style>
+</head>
+<body>
+    <div id="root">
+        <button @click="add">增加一个属性</button>
+        <h1>名字：{{student.name}}</h1>
+        <h1>年龄：{{student.age}}</h1>
+        <!-- 待新增的属性 -->
+        <h1 v-if="student.sex">性别：{{student.sex}}</h1>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        
+        const vm = new Vue({
+            el:"#root",
+            data:{
+               student:{
+                   name:"张三",
+                   age:18
+               }
+            },
+            // 为student添加一个属性
+            methods: {
+                add(){
+                    this.$set(this.student,"sex","男")
+                }
+            },
+        })
+        // 在一个对象中加入一个属性，两种写法
+        // Vue.set(vm.student,"sex","男")
+        // vm.$set(vm.student,"sex","男")
+    </script>
+</body>
+</html>

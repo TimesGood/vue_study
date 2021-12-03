@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>列表排序</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+    
+    </style>
+</head>
+<body>
+    <div id="root">
+        <h3>人员列表</h3>
+        <input type="text" placeholder="请输入名字" v-model="keyword">
+        <button @click="sortType = 2">年龄升序</button>
+        <button @click="sortType = 1">年龄降序</button>
+        <button @click="sortType = 0">原顺序</button>
+        <ul>
+            <li v-for="p in filPerson" :key="p.id">{{p.name}}-{{p.age}}</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        
+        const vm = new Vue({
+            el:"#root",
+            data:{
+                keyword:"", 
+                sortType:0,//0原序、1降序、2升序
+                persons:[
+                    {id:"001",name:"马冬梅",age:"24"},
+                    {id:"002",name:"周冬雨",age:"23"},
+                    {id:"003",name:"周杰伦",age:"34"},
+                    {id:"004",name:"温兆伦",age:"27"}
+                ]
+            },
+            computed:{
+                filPerson(){
+                    const arr =  this.persons.filter((p) => {
+                            //indexOf匹配字符，匹配返回匹配的字符索引,不匹配返回-1
+                            return p.name.indexOf(this.keyword) != -1
+                        })
+                    //0就是false，大于0的就是false，所以只填sortType即可
+                    if(this.sortType) {
+                        //sort排序，其实是选择排序，p1是前一个数，p2是后一个数，相减为正时换位。
+                        //结果就是：后减前升序，前减后降序
+                        return arr.sort((p1,p2)=>{
+                            return this.sortType === 1 ? p2.age-p1.age : p1.age-p2.age
+                        })
+                    }
+                    return arr
+                }
+            }
+        })
+    </script>
+</body>
+</html>

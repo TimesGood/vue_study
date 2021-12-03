@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>模拟vue数据监听</title>
+    <style>
+    
+    </style>
+</head>
+<body>
+    <!-- 不用vue，模拟写一个简单的vue实例对象 -->
+    <script type="text/javascript">
+        let data = {
+            name:"地球",
+            address:"银河"
+        }
+        //创建一个监视的实例对象，用于监视data中属性的变化，data就是vue里面的data
+        const obs = new Observer(data);
+        console.log(obs)
+        //准备一个vm实例对象
+        let vm = {}
+        vm._data = data = obs
+
+        function Observer(obj){
+            //汇总对象中的所有属性形成一个数组
+            const keys = Object.keys(obj)
+            keys.forEach((k)=>{
+                //this监视对象，这里监视keys，k遍历出对象的属性名
+                Object.defineProperty(this,k,{
+                    get(){
+                        console.log("_data."+k+"被获取")
+                        return obj[k]
+                    },
+                    set(val){
+                        console.log("_data."+k+"被改了，我要去解析模板，生成DOM虚拟对象")
+                        obj[k] = val
+                    }
+                    
+                })
+            })
+        }
+        // 可以发现，vue检测对象数据的变化其实就是为被检测的对象添加get、set方法，在get、set方法做响应式操作
+        // 但是，检测数组有点不一样，数组是通过监视数组的push、pop、shift、unshift、splice、sport、sort、reverse来实现响应式操作
+    </script>
+</body>
+</html>
