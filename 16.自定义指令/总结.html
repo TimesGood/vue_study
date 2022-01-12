@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>指令总结</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        自定义指令总结：
+            一、定义语法：
+                （1）局部指令：
+                    new Vue({
+                            directives:{指令名,配置对象}
+                    })
+                    或
+                    new Vue({
+                            directives(){}
+                    })
+                （2）全局指令
+                    Vue.directive(指令名,配置对象)或Vue.directive(指令名,回调函数)
+            二、配置对象中常用的三个函数
+                （1）bind：指令与元素绑定时调用
+                （2）inserted：指令所在元素被插入页面时调用
+                （3）update：指令所在模板结构重新解析时调用
+            三、备注
+                （1）指令定义时不加v-；但使用时要加v-。
+                （2）指令名如果是多个单词，要使用xxx-xxx写法，不要用xxxXxx写法
+     -->
+    <div id="root">
+        <h2>当前的n值是：<span v-text="n"></span></h2>
+        <h2>放大十倍后的n值是：<span v-big="n"></span></h2>
+        <button @click="n++">点我n++</button>
+        <hr/>
+        <input type="text" v-bind:value="n">
+        <input type="text" v-fbind:value="n">
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+        new Vue({
+            el:"#root",
+            data:{
+                n:0
+            },
+            //注，函数里面的this指向的是window
+            //自定义指令
+            directives:{
+                //当我们命名指令需要用到类似驼峰命名时，不要用驼峰，要用xxx-xxx，并且不能省略引号（完整写法是有引号的）
+                "big-number"(element,binding){
+                    element.innerText = binding.value * 10
+                },
+
+                big(element,binding){
+                    element.innerText = binding.value * 10
+                },
+               
+                fbind:{
+                    
+                    bind(element,binding){
+                        element.value = binding.value
+                    },
+                   
+                    inserted(element,binding){
+                        element.focus()
+                    },
+                    
+                    update(element,binding){
+                        element.value = binding.value
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

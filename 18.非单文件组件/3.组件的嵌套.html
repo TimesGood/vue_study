@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>组件的嵌套</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <app></app>
+        
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+
+        const student = Vue.extend({
+            template:`
+                <div>
+                    <h2>学生姓名：{{student_name}}</h2>
+                    <h2>学生年龄：{{age}}</h2>
+                </div>
+            `,
+            data(){
+                return {
+                    student_name:"张三",
+                    age:18
+                }
+            }
+        })
+
+        const school = Vue.extend({
+            template:`
+                <div>
+                    <h2>学校名称：{{school_name}}</h2>
+                    <h2>学校地址：{{address}}</h2>
+                    <student></student>
+                </div>
+            `,
+            data(){
+                return {
+                    school_name:"社会",
+                    address:"地球"
+                }
+            },
+            //组件的嵌套注册，但注册的时候，该组件必须在当前组件之前
+            components:{
+                student
+            }
+        })
+        const hello = Vue.extend({
+            template:`
+                <div>
+                    <h2>
+                       你好世界
+                    </h2>
+                </div>
+            `
+        })
+
+        //定义app组件
+        const app = Vue.extend({
+            template:`
+                <div>
+                    <school></school>
+                    <hello></hello>
+                </div>
+            `,
+            components:{
+                school,
+                hello
+            }
+        })
+        
+        new Vue({
+            el:"#root",
+            //组件注册时，如果注册名由多个单词组成，写法应该xxx-xxx，并用引号括住
+            components:{
+                app
+            }
+        })
+    </script>
+</body>
+</html>

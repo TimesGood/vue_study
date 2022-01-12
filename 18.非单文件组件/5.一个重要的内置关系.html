@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VueComponent</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        1.一个重要的内置关系：VueComponent.prototype.__proto__ === Vue.prototype
+        2.为什么要有这个关系，让组件实例对象可以访问到Vue原型上的属性、方法，其实就是跟继承差不多
+     -->
+    <div id="root">
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+        function Demo(){
+            this.a = 1
+            this.b = 2
+        }
+        const d = new Demo()
+        console.log(Demo.prototype)//显式原型属性
+        console.log(d.__proto__)//隐式原型属性
+
+        //程序员通过显式原型属性操作原型对象，追加一个x属性，值为99
+        Demo.prototype.x = 99;
+
+        //程序员通过隐式原型属性获取值
+        console.log(d.__proto__.x)
+        console.log(d.x)
+    </script>
+</body>
+</html>

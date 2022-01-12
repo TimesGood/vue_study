@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <mete charset="utf-8">
+    <title>收集表单数据</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        收集表单数据：
+            若：<input type="text"/>，则v-model收集的是value值，用户输入的就是value值
+            若：<input type="radio"/>，则v-model收集的是value值，且要给标签配置value值
+            若：<input type="checkbox"
+                1.没有配置value属性，那么收集的是checkbox勾与不勾的布尔值
+                2.配置value属性
+                    （1）v-model的初始值是非数组，那么收集的是checkbox勾与不勾的布尔值
+                    （2）v-model的初始值是数组，那么收集的就是勾选的checkbox的value值的数组
+            备注：v-model的三个修饰
+                lazy：失去焦点时再收集数据
+                number：输入字符串转化为有效数字
+                trim：去除前后空格
+     -->
+    <div id="root">
+        <!-- prevent阻止表单默认提交事件 -->
+        <form @sumbmit.prevent>
+            <!-- trim去掉前后空格 -->
+            账号：<input type="text" v-model.trim="userinfo.username"><br/><br/>
+            密码：<input type="password" v-model="userinfo.password"><br/><br/>
+            年龄：<input type="number" v-model.number="userinfo.age"><br/><br/>
+            <!-- 这里必须要有male -->
+            男<input type="radio" name="sex" v-model="userinfo.sex" value="male">
+            女<input type="radio" name="sex" v-model="userinfo.sex" value="female"><br/><br/>
+            爱好：
+            学习<input type="checkbox" v-model="userinfo.hobby" value="study">
+            打游戏<input type="checkbox" v-model="userinfo.hobby" value="play_game">
+            吃饭<input type="checkbox" v-model="userinfo.hobby" value="eat"><br/><br/>
+            所属校区
+            <select v-model="userinfo.city">
+                <option value="" >请选择校区</option>
+                <option value="beijing">北京校区</option>
+                <option value="sahnghai">上海校区</option>
+                <option value="shenzhen">深圳校区</option>
+                <option value="wuhan">武汉校区</option>
+            </select><br/><br/>
+            其他信息：
+            <textarea v-model.lazy="userinfo.other"></textarea><br/><br/><!-- lazy不实时收集input框的内容，当失去焦点的时候再收集 -->
+            <input type="checkbox" v-model="userinfo.agree">阅读并接受<a href="http://www.baidu.com">《用户协议》</a><br/><br/>
+            <button >提交</button>
+        </form>
+    </div>
+    <script>
+        Vue.config.productionTip = false
+
+        new Vue({
+            el:"#root",
+            data:{
+                userinfo:{
+                    username: "",
+                    password: "",
+                    age: "",
+                    sex: "male",
+                    hobby: [],//如果是多组input框需要接受类型是数组
+                    city: "beijing",
+                    other:"",
+                    agree: ""
+                }
+            },
+            methods:{
+                form_submit(){
+                    console.log(userinfo)    
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

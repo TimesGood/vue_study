@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>过滤器</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/dayjs.min.js"></script><!--bootcdn的日期格式化Api-->
+</head>
+<body>
+    <!-- 注：过滤器在Vue3已经被删除 -->
+    <div id="root">
+        <!-- 实现格式化时间 -->
+        <h2>显示格式化后的事件</h2>
+        <h3>现在是：{{fmtTime}}</h3>
+        <h3>现在是：{{getFmtTime()}}</h3>
+        <!-- 过滤器使用 -->
+        <h3>现在是：{{time | timeFormate}}</h3>
+        <!-- 过滤器传值 -->
+        <h3>现在是：{{time | timeFormate("YYYY-MM-DD")}}</h3>
+        <!-- 过滤器串联 -->
+        <h3>现在是：{{time | timeFormate("YYYY-MM-DD") | timeSlice}}</h3>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        //全局过滤器写法（之后所学很多全局写法类似）
+        // Vue.filter("timeFormate",function(value,str){
+        //     return dayjs().format(str)
+        // })
+
+        new Vue({
+            el:"#root",
+            data:{
+                time:1638755608106
+            },
+            //使用计算属性实现
+            computed:{
+                fmtTime(){
+                    return dayjs(this.time).format("YYYY-MM-DD HH:mm:ss")
+                }
+            },
+            //使用方法实现
+            methods: {
+                getFmtTime(){
+                    return dayjs(this.time).format("YYYY-MM-DD HH:mm:ss")
+                }
+            },
+            //使用过滤器实现
+            filters:{
+                timeFormate(value,str="YYYY-MM-DD HH:mm:ss"){
+                    return dayjs(this.time).format(str)
+                },
+                timeSlice(value){
+                    return value.slice(0,4)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

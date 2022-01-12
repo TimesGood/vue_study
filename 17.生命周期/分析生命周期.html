@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>分析生命周期</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        Vue生命周期：
+            将要创建 ===> 调用beforeCreate
+            创建完毕 ===> 调用created
+            将要挂载 ===> 调用beforeMount
+            挂载完毕 ===> 调用mounted（重要）
+            将要更新 ===> 调用beforeUpdate
+            更新完毕 ===> 调用updated
+            将要销毁 ===> 调用beforeDestroy（重要）
+            销毁完毕 ===> 调用destroyed
+     -->
+
+    <div id="root">
+        <h2>当前的n值是：{{n}}</h2>
+        <button @click="add">点我n++</button>
+        
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+        new Vue({
+            el:"#root",
+            data:{
+                n:1
+            },
+            methods: {
+                add(){
+                    this.n++
+                }
+            },
+            //生命周期函数
+            //在数据监测和数据代理创建之前调用
+            //数据代理还未开始，此时还无法通过vm访问到data中的数据，methods中的方法
+            beforeCreate() {
+                console.log(this)
+            },
+            //在数据监测和数据代理创建完毕调用
+            //初始化：数据检测、数据代理，此时可以通过vm访问到data中的数据，methods中的方法
+            created() {
+                
+            },
+            //模板解析之前调用（挂载之前）
+            //此阶段Vue开始解析模板，生成虚拟DOM（内存中），页面还不能显示解析好的内容，例如一些{{xxx}}还没解析直接显示在页面上
+            beforeMount() {
+                
+            },
+            //模板解析完毕（挂载完毕）
+            //Vue完成模板解析并把真实DOM元素放入到页面后（挂载完毕）调用
+            //一般在此进行：开启定时器、发送网络请求、订阅消息、绑定自定义世界、等初始化操作
+            mounted() {
+
+            },
+            //数据更新之前调用
+            //此时数据是新的，而页面还是旧的
+            beforeUpdate() {
+                
+            },
+            //数据更新完毕
+            //此时数据是新的，页面也是新的
+            updated() {
+                
+            },
+            //销毁流程（销毁vm），当调用vm.$destroy时执行
+            //销毁之前
+            beforeDestroy() {
+                
+            },
+            //销毁完毕
+            destroyed() {
+                
+            },
+
+        })
+
+    </script>
+</body>
+</html>
